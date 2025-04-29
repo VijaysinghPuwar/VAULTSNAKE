@@ -1,4 +1,4 @@
-# Matrix Snake Login
+# Snake Login
 
 A Python desktop app with an animated matrix-style login screen and encrypted user authentication using Fernet. Successfully logging in launches a classic Snake game with user-based score tracking.
 
