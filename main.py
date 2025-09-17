@@ -15,7 +15,16 @@ from cryptography.fernet import Fernet
 BASE_DIR = Path(__file__).resolve().parent
 CRED_FILE = BASE_DIR / "credentials.enc"
 CODE_FILE = BASE_DIR / "ghost.py"
-FERNET_KEY = b"nek9yQUQdpinoDAlNzoYn_w-0-NcYXWEF6lzL10bBMM="
+KEY_FILE = BASE_DIR / "secret.key"
+
+def _load_or_create_key() -> bytes:
+    if KEY_FILE.exists():
+        return KEY_FILE.read_bytes()
+    key = Fernet.generate_key()
+    KEY_FILE.write_bytes(key)
+    return key
+
+FERNET_KEY = _load_or_create_key()
 FERNET = Fernet(FERNET_KEY)
 
 FONT = ("Consolas", 14)

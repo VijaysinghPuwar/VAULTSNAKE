@@ -1,8 +1,8 @@
-"""ghost.py – Snake mini‑game (v3.2)
+"""ghost.py – Snake mini‑game (v3.3)
 
-Changes requested
-=================
-• **Game ends only when the snake hits a wall** – self‑collision is ignored.
+Changes
+=======
+• Game now ends if the snake hits a wall or itself.
 • HUD and game‑over screen now show the **username** alongside the score.
 • Best score table already keyed by username is automatically updated when
   a new personal best is achieved.
@@ -80,10 +80,9 @@ class SnakeGame:
         if self.game_over: return
         hx,hy=self.snake[0]
         nx,ny=hx+self.dir[0],hy+self.dir[1]
-        # Game over ONLY when hitting wall
-        if nx<0 or nx>=GRID_W or ny<0 or ny>=GRID_H:
+        # Game over on wall collision or self-collision
+        if nx<0 or nx>=GRID_W or ny<0 or ny>=GRID_H or (nx,ny) in self.snake:
             return self._end()
-        # Self‑collision allowed: overlapping segments permitted
         self.snake.insert(0,(nx,ny))
         if (nx,ny)==self.food:
             self.score.set(self.score.get()+1); self.food=self._food()
