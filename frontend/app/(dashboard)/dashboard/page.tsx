@@ -26,35 +26,35 @@ export default async function DashboardPage() {
   const riskAccent = { Low: "green", Medium: "amber", High: "red", Critical: "red" }[riskScore.label] as "green" | "amber" | "red";
 
   return (
-    <div className="p-6 animate-fade-in">
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-cyber-text">Security Dashboard</h1>
-        <p className="text-xs text-cyber-muted mt-1">
-          Welcome back, <span className="text-cyber-cyan">{session!.user.name}</span>
-        </p>
+    <div className="page-container">
+      <div className="page-header">
+        <div className="page-heading">
+          <h1 className="page-title">Security Dashboard</h1>
+          <p className="page-subtitle">
+            Welcome back, <span className="text-cyber-cyan">{session!.user.name}</span>
+          </p>
+        </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="stats-grid mb-6 sm:mb-8">
         <StatCard label="Risk Score" value={riskScore.score} sub={riskScore.label} accent={riskAccent} />
         <StatCard label="Open Alerts" value={openAlerts.length} accent={openAlerts.length > 0 ? "red" : "green"} />
         <StatCard label="Total Events" value={summary?.total_events ?? "—"} sub="All time" />
         <StatCard label="Vault Ops" value={summary?.vault_operations ?? "—"} sub="All time" accent="purple" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Activity */}
+      <div className="split-grid">
         <div className="card">
-          <h2 className="text-sm font-semibold text-cyber-text mb-4">Recent Activity</h2>
+          <h2 className="card-title">Recent Activity</h2>
           {recentLogs.length === 0 ? (
             <p className="text-xs text-cyber-muted">No activity yet.</p>
           ) : (
             <div className="space-y-3">
               {recentLogs.map((log) => (
-                <div key={log.id} className="flex items-start gap-3">
+                <div key={log.id} className="flex min-w-0 items-start gap-3">
                   <SeverityBadge severity={log.severity} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-cyber-text truncate">{log.description}</p>
+                    <p className="text-xs leading-relaxed text-cyber-text sm:truncate">{log.description}</p>
                     <p className="text-xs text-cyber-muted">{formatTime(log.created_at)}</p>
                   </div>
                 </div>
@@ -63,9 +63,8 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        {/* Active Alerts */}
         <div className="card">
-          <h2 className="text-sm font-semibold text-cyber-text mb-4">Active Alerts</h2>
+          <h2 className="card-title">Active Alerts</h2>
           {openAlerts.length === 0 ? (
             <div className="flex items-center gap-2 text-xs text-emerald-400">
               <span>✓</span>
@@ -74,13 +73,13 @@ export default async function DashboardPage() {
           ) : (
             <div className="space-y-3">
               {openAlerts.slice(0, 5).map((alert) => (
-                <div key={alert.id} className="flex items-start gap-3">
+                <div key={alert.id} className="flex min-w-0 items-start gap-3">
                   <SeverityBadge severity={alert.severity} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-cyber-text font-medium">
+                    <p className="text-xs font-medium text-cyber-text">
                       {alert.alert_type.replace(/_/g, " ")}
                     </p>
-                    <p className="text-xs text-cyber-muted truncate">{alert.description}</p>
+                    <p className="text-xs leading-relaxed text-cyber-muted sm:truncate">{alert.description}</p>
                     <p className="text-xs text-cyber-muted">{formatTime(alert.created_at)}</p>
                   </div>
                 </div>

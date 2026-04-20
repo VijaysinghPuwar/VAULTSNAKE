@@ -10,14 +10,16 @@ export default async function AdminOverviewPage() {
   const stats = await api.adminGetStats(session.backendToken).catch(() => null);
 
   return (
-    <div className="p-6 animate-fade-in">
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-cyber-text">Admin Overview</h1>
-        <p className="text-xs text-cyber-muted mt-1">Platform-wide security telemetry</p>
+    <div className="page-container">
+      <div className="page-header">
+        <div className="page-heading">
+          <h1 className="page-title">Admin Overview</h1>
+          <p className="page-subtitle">Platform-wide security telemetry</p>
+        </div>
       </div>
 
       {stats && (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="stats-grid-3">
           <StatCard label="Total Users" value={stats.total_users} />
           <StatCard label="Active Users" value={stats.active_users} accent="green" />
           <StatCard label="Vault Items" value={stats.total_vault_items} accent="purple" />

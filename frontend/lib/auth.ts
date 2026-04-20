@@ -1,7 +1,15 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
+const isProduction = process.env.NODE_ENV === "production";
+const authSecret =
+  process.env.AUTH_SECRET ||
+  process.env.NEXTAUTH_SECRET ||
+  (!isProduction ? "vaultsnake-local-development-secret" : undefined);
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  secret: authSecret,
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID!,

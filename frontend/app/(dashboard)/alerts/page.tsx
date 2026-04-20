@@ -40,51 +40,52 @@ export default function AlertsPage() {
   const riskAccent = { Low: "green", Medium: "amber", High: "red", Critical: "red" }[risk?.label ?? "Low"] as "green" | "amber" | "red";
 
   return (
-    <div className="p-6 animate-fade-in">
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-cyber-text">Security Alerts</h1>
-        <p className="text-xs text-cyber-muted mt-1">Automated alerts from threat detection analysis</p>
+    <div className="page-container">
+      <div className="page-header">
+        <div className="page-heading">
+          <h1 className="page-title">Security Alerts</h1>
+          <p className="page-subtitle">Automated alerts from threat detection analysis</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="stats-grid mb-6 sm:mb-8">
         <StatCard label="Risk Score" value={risk?.score ?? 0} sub={risk?.label ?? "Low"} accent={riskAccent} />
         <StatCard label="Open Alerts" value={open.length} accent={open.length > 0 ? "red" : "green"} />
         <StatCard label="Resolved" value={resolved.length} accent="green" />
         <StatCard label="Total" value={alerts?.length ?? 0} />
       </div>
 
-      {/* Open alerts */}
       <div className="card mb-6">
-        <h2 className="text-sm font-semibold text-cyber-text mb-4">
+        <h2 className="card-title flex flex-wrap items-center gap-2">
           Open Alerts {open.length > 0 && <span className="badge badge-red ml-2">{open.length}</span>}
         </h2>
 
         {isLoading && <p className="text-xs text-cyber-muted">Loading…</p>}
         {!isLoading && open.length === 0 && (
-          <div className="flex items-center gap-2 text-xs text-emerald-400 py-2">
+          <div className="flex items-start gap-2 py-2 text-xs leading-relaxed text-emerald-400 sm:items-center">
             <span>✓</span>
-            <span>No active security alerts — your account is clean.</span>
+            <span>No active security alerts - your account is clean.</span>
           </div>
         )}
         <div className="space-y-3">
           {open.map((alert) => (
             <div key={alert.id} className="border border-cyber-border rounded p-4">
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="mb-2 flex flex-wrap items-center gap-2">
                     <SeverityBadge severity={alert.severity} />
-                    <span className="text-sm text-cyber-text font-medium">
+                    <span className="text-sm font-medium text-cyber-text">
                       {ALERT_LABELS[alert.alert_type] ?? alert.alert_type}
                     </span>
                   </div>
-                  <p className="text-xs text-cyber-muted mb-1">{alert.description}</p>
+                  <p className="mb-1 text-xs leading-relaxed text-cyber-muted">{alert.description}</p>
                   <p className="text-xs text-cyber-muted">
                     {new Date(alert.created_at).toLocaleString()}
                   </p>
                 </div>
                 <button
                   onClick={() => resolve(alert.id)}
-                  className="btn-ghost shrink-0 text-xs"
+                  className="btn-ghost w-full shrink-0 text-xs sm:w-auto"
                 >
                   Resolve
                 </button>
@@ -94,15 +95,14 @@ export default function AlertsPage() {
         </div>
       </div>
 
-      {/* Resolved */}
       {resolved.length > 0 && (
         <div className="card">
-          <h2 className="text-sm font-semibold text-cyber-text mb-4">Resolved Alerts</h2>
+          <h2 className="card-title">Resolved Alerts</h2>
           <div className="space-y-2">
             {resolved.map((alert) => (
-              <div key={alert.id} className="flex items-center gap-3 py-2 border-b border-cyber-border border-opacity-30 last:border-0">
+              <div key={alert.id} className="flex flex-col gap-2 border-b border-cyber-border/30 py-3 last:border-0 sm:flex-row sm:items-center sm:gap-3">
                 <span className="badge badge-green">resolved</span>
-                <span className="text-xs text-cyber-muted flex-1 truncate">
+                <span className="min-w-0 flex-1 text-xs text-cyber-muted sm:truncate">
                   {ALERT_LABELS[alert.alert_type] ?? alert.alert_type}
                 </span>
                 <span className="text-xs text-cyber-muted">

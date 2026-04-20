@@ -16,9 +16,9 @@ const ACCENT_CLASS: Record<string, string> = {
 export default function StatCard({ label, value, sub, accent = "cyan" }: StatCardProps) {
   return (
     <div className="stat-card">
-      <p className="text-xs text-cyber-muted uppercase tracking-wider">{label}</p>
-      <p className={`text-2xl font-bold ${ACCENT_CLASS[accent]}`}>{value}</p>
-      {sub && <p className="text-xs text-cyber-muted">{sub}</p>}
+      <p className="break-words text-xs uppercase leading-relaxed tracking-wider text-cyber-muted">{label}</p>
+      <p className={`break-words text-xl font-bold sm:text-2xl ${ACCENT_CLASS[accent]}`}>{value}</p>
+      {sub && <p className="break-words text-xs text-cyber-muted">{sub}</p>}
     </div>
   );
 }

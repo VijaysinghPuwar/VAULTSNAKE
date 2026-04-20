@@ -1,5 +1,9 @@
 # VAULTSNAKE
 
+<p align="center">
+  <img src="frontend/public/logo.png" alt="VAULTSNAKE official brand logo" width="180" />
+</p>
+
 **Secure Vault & Access Monitoring Platform**
 
 A full-stack cybersecurity web application built as a Cybersecurity Master's final project.

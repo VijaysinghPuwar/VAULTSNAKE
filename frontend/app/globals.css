@@ -8,70 +8,100 @@
   html {
     @apply bg-cyber-bg text-cyber-text;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply min-h-screen overflow-x-hidden bg-cyber-bg;
   }
 
   * {
     scrollbar-width: thin;
     scrollbar-color: #1e2d45 #0a0f1e;
+    box-sizing: border-box;
   }
 
-  *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
+  *::-webkit-scrollbar { width: 5px; height: 5px; }
+  *::-webkit-scrollbar-track { @apply bg-cyber-bg; }
+  *::-webkit-scrollbar-thumb { @apply bg-cyber-border rounded; }
 
-  *::-webkit-scrollbar-track {
-    @apply bg-cyber-bg;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    @apply bg-cyber-border rounded;
-  }
+  img { max-width: 100%; height: auto; }
 }
 
 @layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-screen-xl animate-fade-in p-4 sm:p-6;
+  }
+
+  .page-header {
+    @apply mb-5 flex flex-col gap-3 sm:mb-7 sm:flex-row sm:items-end sm:justify-between;
+  }
+
+  .page-heading {
+    @apply min-w-0;
+  }
+
+  .page-title {
+    @apply text-lg font-bold tracking-tight text-cyber-text sm:text-xl;
+  }
+
+  .page-subtitle {
+    @apply mt-1 max-w-2xl text-xs leading-relaxed text-cyber-muted;
+  }
+
   .card {
-    @apply bg-cyber-surface border border-cyber-border rounded-lg p-5;
+    @apply rounded-lg border border-cyber-border bg-cyber-surface p-4 sm:p-5;
+  }
+
+  .card-title {
+    @apply mb-3 text-sm font-semibold text-cyber-text sm:mb-4;
+  }
+
+  .stat-card {
+    @apply card flex min-w-0 flex-col gap-1;
   }
 
   .btn-primary {
-    @apply bg-cyber-cyan text-cyber-bg font-semibold px-4 py-2 rounded-md
-           hover:bg-opacity-80 transition-all duration-150 text-sm;
+    @apply inline-flex min-h-10 items-center justify-center rounded-md bg-cyber-cyan px-3 py-2 text-sm
+           font-semibold text-cyber-bg transition-all duration-150 hover:bg-opacity-80 active:scale-95
+           sm:px-4;
   }
 
   .btn-ghost {
-    @apply border border-cyber-border text-cyber-muted px-4 py-2 rounded-md
-           hover:border-cyber-cyan hover:text-cyber-cyan transition-all duration-150 text-sm;
+    @apply inline-flex min-h-10 items-center justify-center rounded-md border border-cyber-border px-3 py-2
+           text-sm text-cyber-muted transition-all duration-150 hover:border-cyber-cyan hover:text-cyber-cyan
+           active:scale-95 sm:px-4;
   }
 
   .btn-danger {
-    @apply bg-cyber-red bg-opacity-10 border border-cyber-red text-cyber-red px-4 py-2
-           rounded-md hover:bg-opacity-20 transition-all duration-150 text-sm;
+    @apply inline-flex min-h-10 items-center justify-center rounded-md border border-cyber-red bg-cyber-red
+           bg-opacity-10 px-3 py-2 text-sm text-cyber-red transition-all duration-150 hover:bg-opacity-20
+           active:scale-95 sm:px-4;
   }
 
   .input {
-    @apply bg-cyber-bg border border-cyber-border rounded-md px-3 py-2 text-sm
-           text-cyber-text placeholder-cyber-muted
-           focus:outline-none focus:border-cyber-cyan transition-colors w-full;
+    @apply min-h-10 w-full min-w-0 rounded-md border border-cyber-border bg-cyber-bg px-3 py-2 text-sm
+           text-cyber-text placeholder-cyber-muted transition-colors focus:border-cyber-cyan focus:outline-none;
   }
 
   .badge {
-    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+    @apply inline-flex shrink-0 items-center rounded px-2 py-0.5 text-xs font-medium leading-5;
   }
 
-  .badge-cyan   { @apply badge bg-cyan-900 bg-opacity-40 text-cyber-cyan border border-cyan-800; }
-  .badge-green  { @apply badge bg-emerald-900 bg-opacity-40 text-emerald-400 border border-emerald-800; }
-  .badge-amber  { @apply badge bg-amber-900 bg-opacity-40 text-amber-400 border border-amber-800; }
-  .badge-red    { @apply badge bg-red-900 bg-opacity-40 text-red-400 border border-red-800; }
-  .badge-purple { @apply badge bg-purple-900 bg-opacity-40 text-purple-400 border border-purple-800; }
+  .badge-cyan   { @apply badge bg-cyan-900/40 text-cyber-cyan border border-cyan-800; }
+  .badge-green  { @apply badge bg-emerald-900/40 text-emerald-400 border border-emerald-800; }
+  .badge-amber  { @apply badge bg-amber-900/40 text-amber-400 border border-amber-800; }
+  .badge-red    { @apply badge bg-red-900/40 text-red-400 border border-red-800; }
+  .badge-purple { @apply badge bg-purple-900/40 text-purple-400 border border-purple-800; }
   .badge-gray   { @apply badge bg-gray-800 text-gray-400 border border-gray-700; }
 
-  .stat-card {
-    @apply card flex flex-col gap-1;
+  .table-wrap {
+    @apply w-full overflow-x-auto rounded-lg;
   }
 
   .table-cyber {
-    @apply w-full text-sm;
+    @apply w-full min-w-[640px] text-sm;
   }
 
   .table-cyber thead tr {
@@ -79,14 +109,44 @@
   }
 
   .table-cyber th {
-    @apply text-left py-3 px-4 text-xs text-cyber-muted font-medium uppercase tracking-wider;
+    @apply text-left py-3 px-3 sm:px-4 text-xs text-cyber-muted font-medium
+           uppercase tracking-wider whitespace-nowrap;
   }
 
   .table-cyber td {
-    @apply py-3 px-4 border-b border-cyber-border border-opacity-50;
+    @apply border-b border-cyber-border/50 px-3 py-3 text-xs sm:px-4 sm:text-sm;
   }
 
   .table-cyber tbody tr {
-    @apply hover:bg-white hover:bg-opacity-5 transition-colors;
+    @apply hover:bg-white/5 transition-colors;
   }
+
+  .stats-grid {
+    @apply grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:gap-4 lg:grid-cols-4;
+  }
+
+  .stats-grid-3 {
+    @apply grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3;
+  }
+
+  .split-grid {
+    @apply grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6;
+  }
+
+  .mobile-stack {
+    @apply flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out;
+}
+
+.sidebar-overlay {
+  @apply fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden;
 }

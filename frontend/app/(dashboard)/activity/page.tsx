@@ -29,10 +29,12 @@ export default function ActivityPage() {
   );
 
   return (
-    <div className="p-6 animate-fade-in">
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-cyber-text">Activity Log</h1>
-        <p className="text-xs text-cyber-muted mt-1">All security-relevant events for your account</p>
+    <div className="page-container">
+      <div className="page-header">
+        <div className="page-heading">
+          <h1 className="page-title">Activity Log</h1>
+          <p className="page-subtitle">All security-relevant events for your account</p>
+        </div>
       </div>
 
       <div className="card">
@@ -41,7 +43,7 @@ export default function ActivityPage() {
           <p className="text-xs text-cyber-muted p-4">No activity recorded yet.</p>
         )}
         {logs && logs.length > 0 && (
-          <div className="overflow-x-auto">
+          <div className="table-wrap">
             <table className="table-cyber">
               <thead>
                 <tr>
@@ -66,7 +68,7 @@ export default function ActivityPage() {
                         {EVENT_LABEL[log.event_type] ?? log.event_type}
                       </span>
                     </td>
-                    <td className="text-cyber-text max-w-xs truncate text-xs">{log.description}</td>
+                    <td className="max-w-xs truncate text-xs text-cyber-text">{log.description}</td>
                     <td className="text-cyber-muted text-xs">{log.ip_address ?? "—"}</td>
                     <td>
                       <SeverityBadge severity={log.severity} />

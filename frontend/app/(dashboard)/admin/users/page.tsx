@@ -39,16 +39,18 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="p-6 animate-fade-in">
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-cyber-text">User Management</h1>
-        <p className="text-xs text-cyber-muted mt-1">Manage roles and view user accounts</p>
+    <div className="page-container">
+      <div className="page-header">
+        <div className="page-heading">
+          <h1 className="page-title">User Management</h1>
+          <p className="page-subtitle">Manage roles and view user accounts</p>
+        </div>
       </div>
 
       <div className="card">
         {isLoading && <p className="text-xs text-cyber-muted p-4">Loading…</p>}
         {users && (
-          <div className="overflow-x-auto">
+          <div className="table-wrap">
             <table className="table-cyber">
               <thead>
                 <tr>
@@ -64,9 +66,9 @@ export default function AdminUsersPage() {
                 {users.map((user) => (
                   <tr key={user.id}>
                     <td>
-                      <div className="flex flex-col">
-                        <span className="text-cyber-text text-xs">{user.name}</span>
-                        <span className="text-cyber-muted text-xs">{user.email}</span>
+                      <div className="flex min-w-0 flex-col">
+                        <span className="max-w-[220px] truncate text-xs text-cyber-text">{user.name}</span>
+                        <span className="max-w-[220px] truncate text-xs text-cyber-muted">{user.email}</span>
                       </div>
                     </td>
                     <td>
@@ -90,7 +92,7 @@ export default function AdminUsersPage() {
                         <button
                           disabled={updating === user.id}
                           onClick={() => toggleRole(user)}
-                          className="btn-ghost py-1 text-xs"
+                          className="btn-ghost min-h-8 py-1 text-xs"
                         >
                           {updating === user.id ? "…" : user.role === "admin" ? "Demote" : "Promote"}
                         </button>

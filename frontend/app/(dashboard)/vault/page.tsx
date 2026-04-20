@@ -73,27 +73,26 @@ export default function VaultPage() {
   }
 
   return (
-    <div className="p-6 animate-fade-in">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-xl font-bold text-cyber-text">Secure Vault</h1>
-          <p className="text-xs text-cyber-muted mt-1">All content is Fernet-encrypted at rest</p>
+    <div className="page-container">
+      <div className="page-header">
+        <div className="page-heading">
+          <h1 className="page-title">Secure Vault</h1>
+          <p className="page-subtitle">All content is Fernet-encrypted at rest</p>
         </div>
-        <button onClick={() => setShowCreate(true)} className="btn-primary">
+        <button onClick={() => setShowCreate(true)} className="btn-primary w-full sm:w-auto">
           + New Item
         </button>
       </div>
 
       {error && (
-        <div className="mb-4 px-4 py-3 rounded border border-cyber-red bg-red-900 bg-opacity-10 text-red-400 text-xs">
+        <div className="mb-4 rounded border border-cyber-red bg-red-900/10 px-4 py-3 text-xs text-red-400">
           {error}
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Item list */}
+      <div className="split-grid">
         <div className="card">
-          <h2 className="text-sm font-semibold text-cyber-text mb-4">
+          <h2 className="card-title">
             Vault Items ({items?.length ?? 0})
           </h2>
           {isLoading && <p className="text-xs text-cyber-muted">Loading…</p>}
@@ -106,13 +105,13 @@ export default function VaultPage() {
                 key={item.id}
                 onClick={() => openItem(item)}
                 className={clsx(
-                  "flex items-center justify-between p-3 rounded cursor-pointer border transition-colors",
+                  "flex min-w-0 cursor-pointer items-start justify-between gap-3 rounded border p-3 transition-colors sm:items-center",
                   selected?.id === item.id
-                    ? "border-cyber-cyan bg-cyan-900 bg-opacity-10"
-                    : "border-cyber-border hover:border-cyber-cyan hover:border-opacity-50"
+                    ? "border-cyber-cyan bg-cyan-900/10"
+                    : "border-cyber-border hover:border-cyber-cyan/50"
                 )}
               >
-                <div className="flex items-center gap-3 min-w-0">
+                <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
                   <span className={clsx("badge", TYPE_BADGE[item.item_type])}>
                     {TYPE_LABELS[item.item_type]}
                   </span>
@@ -129,12 +128,11 @@ export default function VaultPage() {
           </div>
         </div>
 
-        {/* Item detail / Create form */}
         <div className="card">
           {showCreate ? (
             <>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-semibold text-cyber-text">New Vault Item</h2>
+              <div className="mobile-stack mb-4">
+                <h2 className="card-title mb-0">New Vault Item</h2>
                 <button onClick={() => setShowCreate(false)} className="text-cyber-muted hover:text-cyber-text text-xs">
                   ✕ Close
                 </button>
@@ -173,11 +171,11 @@ export default function VaultPage() {
                     required
                   />
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row">
                   <button type="submit" disabled={loading} className="btn-primary flex-1">
                     {loading ? "Encrypting…" : "Save to Vault"}
                   </button>
-                  <button type="button" onClick={() => setShowCreate(false)} className="btn-ghost">
+                  <button type="button" onClick={() => setShowCreate(false)} className="btn-ghost sm:w-auto">
                     Cancel
                   </button>
                 </div>
@@ -185,14 +183,14 @@ export default function VaultPage() {
             </>
           ) : selected ? (
             <>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-semibold text-cyber-text truncate">{selected.title}</h2>
+              <div className="flex min-w-0 items-start justify-between gap-3 mb-4">
+                <h2 className="text-sm font-semibold text-cyber-text break-words">{selected.title}</h2>
                 <button onClick={() => setSelected(null)} className="text-cyber-muted hover:text-cyber-text text-xs shrink-0">
                   ✕
                 </button>
               </div>
               <div className="space-y-3">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className={clsx("badge", TYPE_BADGE[selected.item_type])}>
                     {TYPE_LABELS[selected.item_type]}
                   </span>
@@ -209,7 +207,7 @@ export default function VaultPage() {
               </div>
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center h-40 text-center">
+            <div className="flex min-h-40 flex-col items-center justify-center text-center">
               <p className="text-cyber-muted text-xs">Select a vault item to view its decrypted content,</p>
               <p className="text-cyber-muted text-xs">or create a new entry.</p>
             </div>
