@@ -101,10 +101,10 @@ export default function Sidebar() {
         href={item.href}
         onClick={() => setIsOpen(false)}
         className={clsx(
-          "flex min-w-0 items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors",
+          "flex min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors duration-150",
           pathname === item.href
             ? activeClass
-            : "text-cyber-muted hover:bg-white/5 hover:text-cyber-text"
+            : "text-cyber-muted hover:bg-white/[0.04] hover:text-cyber-text"
         )}
       >
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-cyber-border bg-cyber-bg/60">
@@ -116,8 +116,8 @@ export default function Sidebar() {
 
   return (
     <>
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-cyber-border bg-cyber-surface/95 px-4 py-3 backdrop-blur lg:hidden">
-        <VaultSnakeLogo size="nav" showWordmark priority wordmarkClassName="text-[11px]" />
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-cyber-border bg-cyber-surface/95 px-5 py-3.5 backdrop-blur lg:hidden">
+        <VaultSnakeLogo size="nav" showWordmark priority />
         <button
           type="button"
           onClick={() => setIsOpen(true)}
@@ -142,11 +142,11 @@ export default function Sidebar() {
 
       <aside
         className={clsx(
-          "fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] shrink-0 flex-col border-r border-cyber-border bg-cyber-surface transition-transform duration-200 lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:w-64 lg:max-w-none lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex w-68 max-w-[85vw] shrink-0 flex-col border-r border-cyber-border bg-cyber-surface transition-transform duration-200 lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:w-60 lg:max-w-none lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex items-center justify-between border-b border-cyber-border px-4 py-4">
+        <div className="flex items-center justify-between border-b border-cyber-border px-5 py-4">
           <VaultSnakeLogo size="sidebar" showWordmark priority />
           <button
             type="button"
@@ -160,19 +160,19 @@ export default function Sidebar() {
           </button>
         </div>
 
-        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4">
-          <p className="mb-1 px-2 py-1 text-xs uppercase tracking-wider text-cyber-muted">Platform</p>
+        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-5">
+          <p className="mb-2 px-3 text-xs uppercase tracking-[0.14em] text-cyber-muted/60">Platform</p>
           {renderItems(NAV_ITEMS, "border border-cyber-cyan/40 bg-cyber-cyan/10 text-cyber-cyan")}
 
           {isAdmin && (
             <>
-              <p className="mb-1 mt-5 px-2 py-1 text-xs uppercase tracking-wider text-cyber-muted">Admin</p>
+              <p className="mb-2 mt-6 px-3 text-xs uppercase tracking-[0.14em] text-cyber-muted/60">Admin</p>
               {renderItems(ADMIN_ITEMS, "border border-purple-500/40 bg-cyber-purple/10 text-purple-300")}
             </>
           )}
         </nav>
 
-        <div className="border-t border-cyber-border px-4 py-4">
+        <div className="border-t border-cyber-border px-5 py-4">
           {session?.user && (
             <div className="mb-3 min-w-0">
               <p className="truncate text-xs text-cyber-text">{session.user.name}</p>

@@ -51,7 +51,7 @@
   }
 
   .card {
-    @apply rounded-lg border border-cyber-border bg-cyber-surface p-4 sm:p-5;
+    @apply rounded-xl border border-cyber-border bg-cyber-surface p-5 sm:p-6;
   }
 
   .card-title {
